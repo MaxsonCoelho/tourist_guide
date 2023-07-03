@@ -13,6 +13,7 @@ class _PreloadPage extends State<PreloadPage> {
   bool loading = true;
 
   void requestInfo() async {
+    //atrasar montagem de tela para aguardar chamada       
     await Future.delayed(const Duration(seconds: 1));
 
     setState(() {
