@@ -5,7 +5,7 @@ import '../models/appdata.dart';
 import '../partials/customappbar.dart';
 import '../partials/customdrawer.dart';
 
-class HomePage extends StatelessWidget {
+class SearchPage extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
     fontFamily: 'Helvetica Neue'
   );
 
-  HomePage({super.key});
+  SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,28 +29,16 @@ class HomePage extends StatelessWidget {
         appBar: CustomAppBar(
           scaffoldKey: _scaffoldKey,
           pageContext: context,
-          title: 'Página Home',
-          hideSearch: false,
+          title: 'Busque uma cidade',
+          hideSearch: true,
           showBack: false
         ),
         backgroundColor: Colors.white,
-        body: Center(
+        body: const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(bottom: 30),
-                child: Text('Bem vindo(a) ao', style: styles,),
-              ),
-
-              Image.asset('lib/assets/travel_logo.png',
-                width: 200,
-              ),
-
-              Container(
-                margin: const EdgeInsets.only(top: 30),
-                child: Text('Seu guia de viagem perfeito', style: styles,),
-              ),
+            children: [
+              Text('buscar...')
             ],
           )
         ),
