@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../models/appdata.dart';
 import '../partials/customappbar.dart';
 import '../partials/customdrawer.dart';
+import '../partials/citybox.dart';
 
 class ContinentPage extends StatelessWidget {
 
@@ -16,6 +17,14 @@ class ContinentPage extends StatelessWidget {
     fontWeight: FontWeight.bold,
     fontFamily: 'Helvetica Neue'
   );
+
+  void seeCityAction ( context, int continentIndex ) {
+    Navigator.pushNamed(context, '/listcity', arguments: continentIndex);
+  }
+
+  void cityBoxAction () {
+    
+  }
 
   ContinentPage({super.key});
 
@@ -51,28 +60,40 @@ class ContinentPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget> [
-                    TextButton(
-                      onPressed: (){}, 
-                      child: Text('${appdata.data[index]['name']} (${cities.length})')
+                    Container(
+                      margin: const EdgeInsets.only(left: 15),
+                      child: Text(
+                        '${appdata.data[index]['name']} (${cities.length})',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Heilvetica Neue'
+                        ),
+                      )
                     ),
                     TextButton(
-                      onPressed: (){}, 
-                      child: const Text('Ver todas as cidades')
+                      onPressed: () {
+                        seeCityAction( context, index );
+                      }, 
+                      child: const Text(
+                        'Ver todas as cidades',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontFamily: 'Heilvetica Neue'
+                        ),
+                        )
                     ),
                   ],
                 ),
                 Container(
-                  height: 130,
+                  height: 150,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: cities.length,
                     itemBuilder: (BuildContext cityContext, int cityIndex) {
-                      return Container(
-                        width: 130,
-                        height: 130,
-                        color: Colors.red,
-                        margin: const EdgeInsets.only(left: 10, right: 10),
-                        child: Text(cities[cityIndex]['name']),
+                      return CityBox(
+                        data: cities[cityIndex],
+                        onTap: cityBoxAction
                       );
                     },
                   ),

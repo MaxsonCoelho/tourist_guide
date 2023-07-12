@@ -33,6 +33,7 @@ PreferredSizeWidget CustomAppBar({
   return AppBar(
     backgroundColor: Colors.white,
     elevation: 0,
+    centerTitle: false,
     title: Text(title,
       style: const TextStyle(
         color: Colors.black,
