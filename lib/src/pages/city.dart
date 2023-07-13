@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/appdata.dart';
-import '../partials/customappbar.dart';
 import '../partials/customdrawer.dart';
 
 class CityPage extends StatelessWidget {
@@ -22,23 +21,33 @@ class CityPage extends StatelessWidget {
     Map<String, dynamic> cityData = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     print(cityData);
 
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+
     return Consumer<AppData>(
       builder: (contexto, appdata, child) => Scaffold(
         key: _scaffoldKey,
         drawer: CustomDrawer(
           pageContext: context
         ),
-        appBar: CustomAppBar(
-          scaffoldKey: _scaffoldKey,
-          pageContext: context,
-          title: 'Tela cidade',
-          hideSearch: true,
-          showBack: false
-        ),
         backgroundColor: Colors.white,
-        body: const Center(
-          child: Text('....'),
-          )
+        body: Stack(
+          children: [
+            Container(
+              height: 250,
+              decoration: const BoxDecoration(
+                color: Colors.red
+              ),
+            ),
+            Container(
+              height: 50,
+              margin: EdgeInsets.only(top: statusBarHeight),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: (){},
+                ),
+            )
+          ],
+        )
         ),
       );
   }
