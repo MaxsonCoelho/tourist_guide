@@ -26,6 +26,7 @@ class CityPage extends StatelessWidget {
     print(cityData);
 
     final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final double footerHeight = MediaQuery.of(context).padding.bottom;
 
     var starRate = double.parse(cityData['review']).floor();
     var stars = [];
@@ -56,70 +57,150 @@ class CityPage extends StatelessWidget {
                 fit: BoxFit.cover,
               )
             ),
-            ListView(
+            Container(
+              decoration: const BoxDecoration(color: Colors.white),
+              child: ListView(
               physics: const ClampingScrollPhysics(),
               padding: EdgeInsets.zero,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 220),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(15),
-                              child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 5),
-                                  child: Text(cityData['name'], style: const TextStyle(
-                                          fontFamily: 'Helvetica Neue',
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold
+                  Container(
+                    margin: const EdgeInsets.only(top: 220),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.all(15),
+                                child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(bottom: 5),
+                                    child: Text(cityData['name'], style: const TextStyle(
+                                            fontFamily: 'Helvetica Neue',
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.bold
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.star, color: stars[0] ? Colors.blue : Colors.grey, size: 16,),
-                                    Icon(Icons.star, color: stars[1] ? Colors.blue : Colors.grey, size: 16,),
-                                    Icon(Icons.star, color: stars[2] ? Colors.blue : Colors.grey, size: 16,),
-                                    Icon(Icons.star, color: stars[3] ? Colors.blue : Colors.grey, size: 16,),
-                                    Icon(Icons.star, color: stars[4] ? Colors.blue : Colors.grey, size: 16,),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.star, color: stars[0] ? Colors.blue : Colors.grey, size: 16,),
+                                      Icon(Icons.star, color: stars[1] ? Colors.blue : Colors.grey, size: 16,),
+                                      Icon(Icons.star, color: stars[2] ? Colors.blue : Colors.grey, size: 16,),
+                                      Icon(Icons.star, color: stars[3] ? Colors.blue : Colors.grey, size: 16,),
+                                      Icon(Icons.star, color: stars[4] ? Colors.blue : Colors.grey, size: 16,),
 
-                                    Container(
-                                      margin: const EdgeInsets.only(left: 5),
-                                      child: Text(cityData['review'], style: const TextStyle(
-                                        fontFamily: 'Helvetica Neue',
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blue
-                                      )),
-                                    )
-                                  ],
-                                )
-                              ],
+                                      Container(
+                                        margin: const EdgeInsets.only(left: 5),
+                                        child: Text(cityData['review'], style: const TextStyle(
+                                          fontFamily: 'Helvetica Neue',
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.blue
+                                        )),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
+                            Container(
+                              margin: const EdgeInsets.all(10),
+                              child: IconButton(
+                                icon: const Icon(Icons.favorite_border, color: Colors.red),
+                                onPressed: (){}, 
+                              ),
+                            )
+                          ],
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                            top: 0,
+                            left: 15,
+                            right: 15,
+                            bottom: 0
                           ),
-                          Container(
-                            margin: const EdgeInsets.all(10),
-                            child: IconButton(
-                              icon: const Icon(Icons.favorite_border, color: Colors.red),
-                              onPressed: (){}, 
-                            ),
-                          )
-                        ],
-                      )
-                    ],
+                          child: Text(cityData['description'], style: const TextStyle(
+                            fontFamily: 'Helvetica Neue',
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey
+                          )),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(15),
+                          child: const Divider(
+                            thickness: 1,
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                            top: 0,
+                            bottom: 15,
+                            left: 0,
+                            right: 0
+                          ),
+                          child: const Text('PRINCIPAIS PONTOS TURÍSTICOS', style: TextStyle(
+                            fontFamily: 'Helvetica Neue',
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold
+                          )),
+                        )
+                      ],
+                    ),
                   ),
-                )
-              ],
+                  GridView.count(
+                    padding: EdgeInsets.only(bottom: footerHeight),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 2,
+                    childAspectRatio: 10 / 11,
+                    children: List.generate(cityData['places'].length, (index){
+                      return Container(
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: AspectRatio(
+                                aspectRatio: 1/1,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    cityData['places'][index]['img'],
+                                    fit: BoxFit.cover,
+                                  ), 
+                                ), 
+                              ) 
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 5),
+                              child: Text(cityData['places'][index]['name'], style: const TextStyle(
+                                fontFamily: 'Helvetica Neue',
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black
+                              )),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 15),
+                              child: const Text('Ponto Turístico', style: TextStyle(
+                                fontFamily: 'Helvetica Neue',
+                                fontSize: 12,
+                                color: Colors.grey
+                              )),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  )
+                ],
+              ),
             ),
             Container(
               height: 50,
