@@ -58,22 +58,25 @@ class _CityPage extends State<CityPage> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 250,
-              child: Image.network(
-                cityData['places'][0]['img'],
-                fit: BoxFit.cover,
-              )
+            Container(
+              margin: EdgeInsets.only(top: statusBarHeight),
+              child: Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 250,
+                child: Image.network(
+                  cityData['places'][0]['img'],
+                  fit: BoxFit.cover,
+                )
+              ),
             ),
             ListView(
               physics: const ClampingScrollPhysics(),
               padding: EdgeInsets.zero,
               children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 220),
+                    margin: const EdgeInsets.only(top: 280),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),

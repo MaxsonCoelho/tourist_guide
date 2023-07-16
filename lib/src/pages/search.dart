@@ -4,18 +4,32 @@ import 'package:provider/provider.dart';
 import '../models/appdata.dart';
 import '../partials/customappbar.dart';
 import '../partials/customdrawer.dart';
+import '../partials/citybox.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+
+  @override
+  State<SearchPage> createState() => _SearchPage();
+}
+class _SearchPage extends State<SearchPage> {
+  var list = [];
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+  void doSearch(pageContext, text) async {
+    var newList = await Provider.of<AppData>(pageContext, listen:false).searchCity(text);
+    
+    setState(() {
+      list = newList;
+    });
+  }
 
   TextStyle styles = const TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.bold,
     fontFamily: 'Helvetica Neue'
   );
-
-  SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +48,36 @@ class SearchPage extends StatelessWidget {
           showBack: false
         ),
         backgroundColor: Colors.white,
-        body: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('buscar...')
-            ],
-          )
-        ),
+        body: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(10),
+              child:  TextField(
+                onChanged: (text) {
+                  doSearch(context, text);
+                },
+                decoration: const InputDecoration(
+                  hintText: 'Digite o nome de uma cidade',
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(Icons.search, size: 32)
+                ),
+              ),
+            ),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                children: List.generate(list.length, (index) {
+                  return CityBox(
+                    data: list[index], 
+                    onTap: (cityData) {
+                      Navigator.pushNamed(context, '/city', arguments: cityData);
+                    },
+                  );
+                }),
+              ) 
+            )
+          ],
+        )
       )
     );
   }

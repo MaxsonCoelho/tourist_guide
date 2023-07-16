@@ -7,6 +7,27 @@ class AppData with ChangeNotifier {
   var data = [];
   var favorites = [];
 
+  Future<List> searchCity(text) async {
+    var result = [];
+    
+    text = text.trim().toLowerCase();
+    if(text == '') {
+      return result;
+    }
+
+    for(var continents in data) {
+      for(var country in continents['countries']) {
+        for(var city in country['cities']) {
+          if(city['name'].toLowerCase().contains(text)) {
+            result.add(city);
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
   bool hasFavorite(cityName) {
     return favorites.contains(cityName);
   }
