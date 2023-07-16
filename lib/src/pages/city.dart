@@ -1,10 +1,18 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/appdata.dart';
 import '../partials/customdrawer.dart';
 
-class CityPage extends StatelessWidget {
+class CityPage extends StatefulWidget {
+  @override
+  _CityPage createState() => _CityPage();
+}
+
+class _CityPage extends State<CityPage> {
+  bool heart = false;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -18,7 +26,7 @@ class CityPage extends StatelessWidget {
     Navigator.pop(context);
   }
 
-  CityPage({super.key});
+  _CityPage();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +47,10 @@ class CityPage extends StatelessWidget {
     }
 
     return Consumer<AppData>(
-      builder: (contexto, appdata, child) => Scaffold(
+      builder: (contexto, appdata, child) {
+        heart = appdata.hasFavorite(cityData['name']);
+
+        return Scaffold(
         key: _scaffoldKey,
         drawer: CustomDrawer(
           pageContext: context
@@ -57,9 +68,7 @@ class CityPage extends StatelessWidget {
                 fit: BoxFit.cover,
               )
             ),
-            Container(
-              decoration: const BoxDecoration(color: Colors.white),
-              child: ListView(
+            ListView(
               physics: const ClampingScrollPhysics(),
               padding: EdgeInsets.zero,
               children: [
@@ -113,8 +122,12 @@ class CityPage extends StatelessWidget {
                             Container(
                               margin: const EdgeInsets.all(10),
                               child: IconButton(
-                                icon: const Icon(Icons.favorite_border, color: Colors.red),
-                                onPressed: (){}, 
+                                icon: heart ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite_border),
+                                onPressed: () {
+                                  setState(() {
+                                    heart = appdata.favorite(cityData['name']);
+                                  });
+                                }, 
                               ),
                             )
                           ],
@@ -197,10 +210,10 @@ class CityPage extends StatelessWidget {
                           ],
                         ),
                       );
-                    }),
-                  )
-                ],
-              ),
+                    }
+                  ),
+                )
+              ],
             ),
             Container(
               height: 50,
@@ -213,8 +226,8 @@ class CityPage extends StatelessWidget {
                 ),
             ),
           ],
-        )
-        ),
-      );
+        ));
+      }
+    );
   }
 }
