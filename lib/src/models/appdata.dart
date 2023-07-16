@@ -7,9 +7,23 @@ class AppData with ChangeNotifier {
   var data = [];
   var favorites = [];
 
-  Future<List> searchCity(text) async {
+  List favoritesCities() {
+    List result = [];
+
+    for(var favorite in favorites) {
+      List foundCities = searchCity(favorite);
+      // ignore: prefer_is_empty
+      if(foundCities.length > 0) {
+        result.add( foundCities[0] );
+      } 
+    }
+
+    return result;
+  }
+
+  List searchCity(text) {
     var result = [];
-    
+
     text = text.trim().toLowerCase();
     if(text == '') {
       return result;

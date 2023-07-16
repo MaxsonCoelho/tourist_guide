@@ -18,6 +18,7 @@ class _SearchPage extends State<SearchPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   void doSearch(pageContext, text) async {
+    // ignore: await_only_futures
     var newList = await Provider.of<AppData>(pageContext, listen:false).searchCity(text);
     
     setState(() {

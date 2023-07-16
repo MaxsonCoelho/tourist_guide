@@ -9,6 +9,7 @@ import 'src/pages/search.dart';
 import 'src/pages/continent.dart';
 import 'src/pages/listcity.dart';
 import 'src/pages/city.dart';
+import 'src/pages/favorites.dart';
 
 void main() => runApp(
     MultiProvider(
@@ -30,10 +31,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/preload':(context) => const PreloadPage(),
         '/home':(context) => HomePage(),
-        '/search':(context) => SearchPage(),
+        '/search':(context) => const SearchPage(),
         '/continent': (context) => ContinentPage(),
         '/listcity':(context) => ListCityPage(),
-        '/city':(context) => CityPage()
+        '/city':(context) => CityPage(),
+        '/favorites':(context) => FavoritesPage()
       },
       initialRoute: '/preload',
     );
